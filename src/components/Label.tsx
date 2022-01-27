@@ -32,22 +32,29 @@ export const Label: FC<LabelProps> = ({ label, onUpdate, onCancel }) => {
   const [labelPlacement, setLabelPlacement] = useState<LabelPlacement>(placement);
 
   useLayoutEffect(() => {
-    if (labelRef.current) {
-      const { innerWidth, innerHeight } = window;
-      const { top, left, width, height } = labelRef.current.getBoundingClientRect();
-      console.log(innerWidth, innerHeight, width, height, left, top);
+    const changeLabelPlacementRelativeScreen = () => {
+      if (labelRef.current) {
+        const { innerWidth, innerHeight } = window;
+        const { top, left, width, height } = labelRef.current.getBoundingClientRect();
 
-      const isOutOfScreenOnX = width + left > innerWidth;
-      const isOutOfScreenOnY = height + top > innerHeight;
+        const isOutOfScreenOnX = width + left > innerWidth;
+        const isOutOfScreenOnY = height + top > innerHeight;
 
-      if (isOutOfScreenOnX && isOutOfScreenOnY) {
-        setLabelPlacement(LabelPlacement.BOTTOM_RIGHT);
-      } else if (isOutOfScreenOnX) {
-        setLabelPlacement(LabelPlacement.TOP_RIGHT);
-      } else if (isOutOfScreenOnY) {
-        setLabelPlacement(LabelPlacement.BOTTOM_LEFT);
+        if (isOutOfScreenOnX && isOutOfScreenOnY) {
+          setLabelPlacement(LabelPlacement.BOTTOM_RIGHT);
+        } else if (isOutOfScreenOnX) {
+          setLabelPlacement(LabelPlacement.TOP_RIGHT);
+        } else if (isOutOfScreenOnY) {
+          setLabelPlacement(LabelPlacement.BOTTOM_LEFT);
+        }
       }
-    }
+    };
+
+    changeLabelPlacementRelativeScreen();
+
+    window.addEventListener('resize', changeLabelPlacementRelativeScreen);
+
+    return () => window.removeEventListener('resize', changeLabelPlacementRelativeScreen);
   }, []);
 
   const saveLabel = (event: FormEvent<HTMLFormElement>) => {
