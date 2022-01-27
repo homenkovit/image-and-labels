@@ -11,6 +11,7 @@
   background-color: $label-color;
   color: #ffffff;
   word-wrap: break-word;
+  box-shadow: 2px 4px 4px 0 rgb(0 0 0 / 40%);
 
   &::after {
     content: '';

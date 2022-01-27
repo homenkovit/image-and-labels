@@ -1,9 +1,11 @@
 .header {
   flex-shrink: 0;
+  z-index: 1;
   position: relative;
   padding: 16px;
   background-color: #007cc4;
   color: #ffffff;
+  box-shadow: 0 2px 4px 0 rgb(0 0 0 / 40%);
 
   @media screen and (max-width: 900px) {
     display: flex;
