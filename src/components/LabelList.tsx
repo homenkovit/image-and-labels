@@ -17,9 +17,10 @@ export const LabelList: FC<LabelListProps> = ({ list, onChange }) => {
   const addNewLabel = (event: MouseEvent<HTMLUListElement>) => {
     if (event.currentTarget === event.target) {
       const { offsetWidth, offsetHeight } = event.currentTarget;
+      const { offsetX, offsetY } = event.nativeEvent;
 
-      const x = event.nativeEvent.offsetX / offsetWidth * 100;
-      const y = event.nativeEvent.offsetY / offsetHeight * 100;
+      const x = offsetX / offsetWidth * 100;
+      const y = offsetY / offsetHeight * 100;
 
       const newLabel: LabelObject = {
         text: '',

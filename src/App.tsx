@@ -18,10 +18,12 @@ export const App: FC = () => {
   const uploadImage = (event: ChangeEvent<HTMLInputElement>) => {
     const { files } = event.target;
 
-    if (files?.length && files[0].type.startsWith('image')) {
-      setImageUrl(URL.createObjectURL(files[0]));
-    } else {
-      alert('You can upload only image.');
+    if (files?.length) {
+      if (files[0].type.startsWith('image')) {
+        setImageUrl(URL.createObjectURL(files[0]));
+      } else {
+        alert('You can upload only image file.');
+      }
     }
   };
 
