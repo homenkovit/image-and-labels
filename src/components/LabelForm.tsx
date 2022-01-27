@@ -1,4 +1,6 @@
 import { FC, FormEvent } from 'react';
+import { Button } from './Button';
+import styles from './LabelForm.module.scss';
 
 interface LabelFormProps {
   onSubmit?: (event: FormEvent<HTMLFormElement>) => void;
@@ -6,14 +8,14 @@ interface LabelFormProps {
 }
 
 export const LabelForm: FC<LabelFormProps> = ({ onSubmit, onCancel }) => (
-  <form className="label-form" onSubmit={onSubmit}>
-    <label htmlFor="comment" className="label-form-comment">
+  <form className={styles.form} onSubmit={onSubmit}>
+    <label htmlFor="comment" className={styles.comment}>
       Comment
       <textarea name="comment" id="comment" required autoFocus></textarea>
     </label>
-    <div className="label-form-buttons">
-      <button type="submit" className="label-form-save-button">Save</button>
-      <button type="button" className="label-form-cancel-button" onClick={onCancel}>Cancel</button>
+    <div className={styles.buttons}>
+      <Button type="submit" small>Save</Button>
+      <Button type="button" small onClick={onCancel}>Cancel</Button>
     </div>
   </form>
 );

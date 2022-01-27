@@ -1,5 +1,6 @@
 import { FC, useState, MouseEvent, useEffect } from 'react';
 import { Label, LabelObject, LabelPlacement } from './Label';
+import styles from './LabelList.module.scss';
 
 interface LabelListProps {
   list: Array<LabelObject>;
@@ -49,7 +50,7 @@ export const LabelList: FC<LabelListProps> = ({ list, onChange }) => {
   };
 
   return (
-    <ul className="labels" onClick={addNewLabel}>
+    <ul className={styles.labels} onClick={addNewLabel}>
       {labels.map((label, index) => (
         <li key={label.text + index}>
           <Label

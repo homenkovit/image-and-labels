@@ -1,6 +1,7 @@
 import { FC, SyntheticEvent, useRef, useState, useLayoutEffect } from 'react';
 import { LabelObject } from './Label';
 import { LabelList } from './LabelList';
+import styles from './PreviewWithLabels.module.scss';
 
 interface PreviewWithLabelsProps {
   imageUrl: string;
@@ -40,9 +41,9 @@ export const PreviewWithLabels: FC<PreviewWithLabelsProps> = ({ imageUrl }) => {
   };
 
   return (
-    <div className="preview-with-labels" ref={mainRef}>
-      <div className="preview-with-labels-container" style={previewSize}>
-        <div className="preview">
+    <div className={styles.main} ref={mainRef}>
+      <div className={styles.container} style={previewSize}>
+        <div className={styles.preview}>
           <img src={imageUrl} alt="uploaded image" onLoad={onImageLoad} />
         </div>
         <LabelList list={labels} onChange={(newList) => setLabels(newList)} />

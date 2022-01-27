@@ -1,5 +1,6 @@
 import { FC, FormEvent, useLayoutEffect, useRef, useState } from 'react';
 import { LabelForm } from './LabelForm';
+import styles from './Label.module.scss';
 
 export enum LabelPlacement {
   TOP_LEFT = 'top-left',
@@ -69,8 +70,10 @@ export const Label: FC<LabelProps> = ({ label, onUpdate, onCancel }) => {
   };
 
   return (
-    <div ref={labelRef} className={`label ${labelPlacement}`} style={labelStyles}>
-      {!!text ? text : <LabelForm onSubmit={saveLabel} onCancel={onCancel} />}
+    <div ref={labelRef} className={`${styles.label} ${styles[labelPlacement]}`} style={labelStyles}>
+      <div className={styles.container}>
+        {!!text ? text : <LabelForm onSubmit={saveLabel} onCancel={onCancel} />}
+      </div>
     </div>
   );
 };

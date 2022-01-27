@@ -1,0 +1,70 @@
+@use '../pallete.scss' as pallete;
+
+
+.label {
+  $label-color: pallete.$brand-color;
+  $arrow-width: 10px;
+
+  position: absolute;
+  max-width: 300px;
+  max-height: 150px;
+  background-color: $label-color;
+  color: #ffffff;
+  word-wrap: break-word;
+
+  &::after {
+    content: '';
+    position: absolute;
+    border: $arrow-width solid transparent;
+  }
+
+  &.top-left {
+    transform: translate(-$arrow-width, $arrow-width);
+
+    &::after {
+      border-bottom-color: $label-color;
+      top: 0;
+      left: 0;
+      transform: translateY(-100%);
+    }
+  }
+
+
+  &.top-right {
+    transform: translate(calc(-100% + $arrow-width), $arrow-width);
+
+    &::after {
+      border-bottom-color: $label-color;
+      top: 0;
+      right: 0;
+      transform: translateY(-100%);
+    }
+  }
+
+  &.bottom-left {
+    transform: translate(-$arrow-width, calc(-100% - $arrow-width));
+
+    &::after {
+      border-top-color: $label-color;
+      bottom: 0;
+      left: 0;
+      transform: translateY(100%);
+    }
+  }
+
+  &.bottom-right {
+    transform: translate(calc(-100% + $arrow-width), calc(-100% - $arrow-width));
+
+    &::after {
+      border-top-color: $label-color;
+      bottom: 0;
+      right: 0;
+      transform: translateY(100%);
+    }
+  }
+}
+
+.container {
+  overflow: hidden;
+  padding: 5px 10px;
+}
