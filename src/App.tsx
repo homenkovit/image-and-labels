@@ -12,7 +12,7 @@ export const App: FC = () => {
         URL.revokeObjectURL(imageUrl);
       }
     }
-  }, []);
+  }, [imageUrl]);
 
   const uploadImage = (event: ChangeEvent<HTMLInputElement>) => {
     const { files } = event.target;

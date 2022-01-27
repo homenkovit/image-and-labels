@@ -1,36 +1,69 @@
-import { FC, FormEvent, useRef, useState } from 'react';
+import { FC, FormEvent, useLayoutEffect, useRef, useState } from 'react';
+import { LabelForm } from './LabelForm';
+
+export enum LabelPlacement {
+  TOP_LEFT = 'top-left',
+  TOP_RIGHT = 'top-right',
+  BOTTOM_LEFT = 'bottom-left',
+  BOTTOM_RIGHT = 'bottom-right',
+}
+
+export type LabelObject = {
+  text: string,
+  coordinates: {
+    x: number,
+    y: number,
+  },
+  placement: LabelPlacement,
+};
 
 interface LabelProps {
-  text: string;
+  label: LabelObject;
   onUpdate?: (text: string) => void;
   onCancel?: () => void;
 }
 
-export const Label: FC<LabelProps> = ({ text, onUpdate, onCancel }) => {
-  const commentTextareaRef = useRef<HTMLTextAreaElement>(null);
+export const Label: FC<LabelProps> = ({ label, onUpdate, onCancel }) => {
+  const labelRef = useRef<HTMLDivElement>(null);
+
+  const { text, coordinates, placement } = label;
+  const labelStyles = { top: `${coordinates.y}%`, left: `${coordinates.x}%` };
+
+  const [labelPlacement, setLabelPlacement] = useState<LabelPlacement>(placement);
+
+  useLayoutEffect(() => {
+    if (labelRef.current) {
+      const { innerWidth, innerHeight } = window;
+      const { top, left, width, height } = labelRef.current.getBoundingClientRect();
+      console.log(innerWidth, innerHeight, width, height, left, top);
+
+      const isOutOfScreenOnX = width + left > innerWidth;
+      const isOutOfScreenOnY = height + top > innerHeight;
+
+      if (isOutOfScreenOnX && isOutOfScreenOnY) {
+        setLabelPlacement(LabelPlacement.BOTTOM_RIGHT);
+      } else if (isOutOfScreenOnX) {
+        setLabelPlacement(LabelPlacement.TOP_RIGHT);
+      } else if (isOutOfScreenOnY) {
+        setLabelPlacement(LabelPlacement.BOTTOM_LEFT);
+      }
+    }
+  }, []);
 
   const saveLabel = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (onUpdate && commentTextareaRef.current?.value) {
-      onUpdate(commentTextareaRef.current.value);
-    }
-  }
+    const formData = new FormData(event.currentTarget);
+    const comment = formData.get('comment');
 
-  if (text) {
-    return (
-      <div className="label">{text}</div>
-    );
-  }
+    if (onUpdate && comment) {
+      onUpdate(comment.toString());
+    }
+  };
 
   return (
-    <form onSubmit={saveLabel}>
-      <label htmlFor="comment">
-        Comment
-        <textarea ref={commentTextareaRef} name="comment" id="comment" required></textarea>
-      </label>
-      <button type="submit">Save</button>
-      <button type="button" onClick={onCancel}>Cancel</button>
-    </form>
+    <div ref={labelRef} className={`label ${labelPlacement}`} style={labelStyles}>
+      {!!text ? text : <LabelForm onSubmit={saveLabel} onCancel={onCancel} />}
+    </div>
   );
 };
