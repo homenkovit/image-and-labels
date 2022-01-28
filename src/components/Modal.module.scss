@@ -1,0 +1,36 @@
+@use '../pallete.scss' as pallete;
+
+.modal {
+  z-index: 100;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-width: 300px;
+  max-width: min(600px, 80vw);
+  max-height: 80vh;
+  border-radius: 3px;
+  background-color: pallete.$brand-color;
+  box-shadow: 2px 4px 24px 0 rgb(0 0 0 / 40%);
+}
+
+.content {
+  flex-grow: 1;
+  overflow: auto;
+  padding: 16px;
+  color: #ffffff;
+  word-wrap: break-word;
+  scrollbar-width: thin;
+}
+
+.footer {
+  z-index: 1;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 16px;
+}

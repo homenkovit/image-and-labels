@@ -40,13 +40,15 @@ export const PreviewWithLabels: FC<PreviewWithLabelsProps> = ({ imageUrl }) => {
     }
   };
 
+  const onLabelListChange = (newList: LabelObject[]) => setLabels(newList);
+
   return (
     <div className={styles.main} ref={mainRef}>
       <div className={styles.container} style={previewSize}>
         <div className={styles.preview}>
           <img src={imageUrl} alt="uploaded image" onLoad={onImageLoad} />
         </div>
-        <LabelList list={labels} onChange={(newList) => setLabels(newList)} />
+        <LabelList list={labels} onChange={onLabelListChange} />
       </div>
     </div>
   );

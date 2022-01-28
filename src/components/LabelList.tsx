@@ -1,5 +1,7 @@
 import { FC, useState, MouseEvent, useEffect } from 'react';
-import { Label, LabelObject, LabelPlacement } from './Label';
+import { isOutOfScreen } from '../utils';
+import { Label, LabelObject, LabelPlacement, LABEL_ARROW_SIZE } from './Label';
+import { LABEL_FORM_HEIGHT, LABEL_FORM_WIDTH } from './LabelForm';
 import styles from './LabelList.module.scss';
 
 interface LabelListProps {
@@ -16,16 +18,27 @@ export const LabelList: FC<LabelListProps> = ({ list, onChange }) => {
 
   const addNewLabel = (event: MouseEvent<HTMLUListElement>) => {
     if (event.currentTarget === event.target) {
+      let placement = LabelPlacement.TOP_LEFT;
       const { offsetWidth, offsetHeight } = event.currentTarget;
-      const { offsetX, offsetY } = event.nativeEvent;
+      const { offsetX, offsetY, clientX, clientY } = event.nativeEvent;
 
       const x = offsetX / offsetWidth * 100;
       const y = offsetY / offsetHeight * 100;
 
+      const { isOutOfScreenOnX, isOutOfScreenOnY } = isOutOfScreen(LABEL_FORM_WIDTH, LABEL_FORM_HEIGHT + LABEL_ARROW_SIZE, clientX, clientY);
+
+      if (isOutOfScreenOnX && isOutOfScreenOnY) {
+        placement = LabelPlacement.BOTTOM_RIGHT;
+      } else if (isOutOfScreenOnX) {
+        placement = LabelPlacement.TOP_RIGHT;
+      } else if (isOutOfScreenOnY) {
+        placement = LabelPlacement.BOTTOM_LEFT;
+      }
+
       const newLabel: LabelObject = {
         text: '',
         coordinates: { x, y },
-        placement: LabelPlacement.TOP_LEFT,
+        placement,
       }
 
       setLabels([...labels, newLabel]);

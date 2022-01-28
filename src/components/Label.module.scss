@@ -1,17 +1,17 @@
 @use '../pallete.scss' as pallete;
 
-
 .label {
   $label-color: pallete.$brand-color;
-  $arrow-width: 10px;
+  $arrow-width: var(--arrow-width);
 
   position: absolute;
+  display: flex;
+  flex-direction: column;
   max-width: 300px;
-  max-height: 150px;
+  border-radius: 3px;
   background-color: $label-color;
+  box-shadow: 0 2px 16px 0 rgb(0 0 0 / 40%);
   color: #ffffff;
-  word-wrap: break-word;
-  box-shadow: 2px 4px 4px 0 rgb(0 0 0 / 40%);
 
   &::after {
     content: '';
@@ -19,53 +19,57 @@
     border: $arrow-width solid transparent;
   }
 
-  &.top-left {
-    transform: translate(-$arrow-width, $arrow-width);
-
+  &.top-left,
+  &.top-right {
     &::after {
       border-bottom-color: $label-color;
       top: 0;
-      left: 0;
       transform: translateY(-100%);
+    }
+  }
+
+  &.bottom-left,
+  &.bottom-right {
+    &::after {
+      border-top-color: $label-color;
+      bottom: 0;
+      transform: translateY(100%);
+    }
+  }
+
+  &.top-left {
+    transform: translate(calc($arrow-width * -2), $arrow-width);
+
+    &::after {
+      left: $arrow-width;
     }
   }
 
 
   &.top-right {
-    transform: translate(calc(-100% + $arrow-width), $arrow-width);
+    transform: translate(calc(-100% + $arrow-width * 2), $arrow-width);
 
     &::after {
       border-bottom-color: $label-color;
       top: 0;
-      right: 0;
+      right: $arrow-width;
       transform: translateY(-100%);
     }
   }
 
   &.bottom-left {
-    transform: translate(-$arrow-width, calc(-100% - $arrow-width));
+    transform: translate(calc($arrow-width * -2), calc(-100% - $arrow-width));
 
     &::after {
-      border-top-color: $label-color;
-      bottom: 0;
-      left: 0;
-      transform: translateY(100%);
+      left: $arrow-width;
     }
   }
 
   &.bottom-right {
-    transform: translate(calc(-100% + $arrow-width), calc(-100% - $arrow-width));
+    transform: translate(calc(-100% + $arrow-width * 2), calc(-100% - $arrow-width));
 
     &::after {
-      border-top-color: $label-color;
-      bottom: 0;
-      right: 0;
-      transform: translateY(100%);
+      right: $arrow-width;
     }
   }
-}
-
-.container {
-  overflow: hidden;
-  padding: 5px 10px;
 }

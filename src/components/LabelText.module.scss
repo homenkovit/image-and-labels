@@ -1,0 +1,14 @@
+.text {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 6;
+  padding: 5px 10px;
+  margin: 0;
+  word-wrap: break-word;
+}
+
+.show-full-button {
+  align-self: flex-end;
+  margin: 5px 10px 10px;
+}
