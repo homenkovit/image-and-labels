@@ -1,4 +1,4 @@
-import { ChangeEvent, CSSProperties, FC, FormEvent, useRef, useState } from 'react';
+import { ChangeEvent, CSSProperties, FC, FormEvent, useEffect, useRef, useState } from 'react';
 import { useClickOutside } from '../hooks/useClickOutside';
 import { Button } from './Button';
 import styles from './LabelForm.module.scss';
@@ -19,6 +19,24 @@ export const LabelForm: FC<LabelFormProps> = ({ onSave, onCancel }) => {
     width: LABEL_FORM_WIDTH,
     height: LABEL_FORM_HEIGHT,
   };
+
+  useEffect(() => {
+    const onKeyUp = (event: KeyboardEvent) => {
+      event.stopPropagation();
+
+      if (event.key === 'Escape') {
+        setCommentTrimed('');
+
+        if (onCancel) {
+          onCancel();
+        }
+      }
+    };
+
+    document.addEventListener('keyup', onKeyUp);
+
+    return () => document.removeEventListener('keyup', onKeyUp);
+  }, []);
 
   const onClickOutside = () => {
     if (onSave && commentTrimed) {
