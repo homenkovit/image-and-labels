@@ -24,7 +24,9 @@ export const LabelText: FC = ({ children }) => {
 
   return (
     <>
-      <p ref={textRef} className={styles.text}>{children}</p>
+      <div className={styles.container}>
+        <p ref={textRef} className={styles.text}>{children}</p>
+      </div>
       {isShowFullButtonVisible && (
         <Button type="button" className={styles['show-full-button']} onClick={showFullTextModal} small>
           Show full

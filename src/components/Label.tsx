@@ -79,7 +79,7 @@ export const Label: FC<LabelProps> = ({ label, onUpdate, onCancel }) => {
   };
 
   return (
-    <div ref={labelRef} className={`${styles.label} ${styles[labelPlacement]}`} style={labelStyles}>
+    <div ref={labelRef} className={`${styles.label} ${!!text && styles.saved} ${styles[labelPlacement]}`} style={labelStyles}>
       {!!text
         ? <LabelText>{text}</LabelText>
         : <LabelForm onSave={saveLabel} onCancel={onCancel} />
