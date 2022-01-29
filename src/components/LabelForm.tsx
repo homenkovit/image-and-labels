@@ -1,4 +1,5 @@
-import { ChangeEvent, CSSProperties, FC, FormEvent, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, CSSProperties, FC, FormEvent, useRef, useState } from 'react';
+import FocusLock from 'react-focus-lock';
 import { useClickOutside } from '../hooks/useClickOutside';
 import { useKeyUp } from '../hooks/useKeyUp';
 import { Button } from './Button';
@@ -52,15 +53,17 @@ export const LabelForm: FC<LabelFormProps> = ({ onSave, onCancel }) => {
   };
 
   return (
-    <form ref={formRef} style={formStyles} className={styles.form} onSubmit={onSubmit}>
-      <label htmlFor="comment" className={styles.comment}>
-        Comment
-        <textarea name="comment" id="comment" onChange={onTextareaChange} required autoFocus></textarea>
-      </label>
-      <div className={styles.buttons}>
-        {!!commentTrimed && <Button type="submit" small>Save</Button>}
-        <Button type="button" small onClick={onCancel}>Cancel</Button>
-      </div>
-    </form>
+    <FocusLock returnFocus>
+      <form ref={formRef} style={formStyles} className={styles.form} onSubmit={onSubmit}>
+        <label htmlFor="comment" className={styles.comment}>
+          Comment
+          <textarea name="comment" id="comment" onChange={onTextareaChange} required autoFocus></textarea>
+        </label>
+        <div className={styles.buttons}>
+          {!!commentTrimed && <Button type="submit" small>Save</Button>}
+          <Button type="button" small onClick={onCancel}>Cancel</Button>
+        </div>
+      </form>
+    </FocusLock>
   );
 };

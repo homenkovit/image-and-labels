@@ -1,5 +1,6 @@
-import { FC, useEffect, useRef } from 'react';
+import { FC, useRef } from 'react';
 import { createPortal } from 'react-dom';
+import FocusLock from 'react-focus-lock';
 import { useKeyUp } from '../hooks/useKeyUp';
 import { Button } from './Button';
 import styles from './Modal.module.scss';
@@ -35,20 +36,14 @@ export const Modal: FC<ModalProps> = ({ children, isVisible, onClose }) => {
 
   useKeyUp('Escape', onPressEscape);
 
-  useEffect(() => {
-    if (modalRef.current) {
-      modalRef.current.focus();
-    }
-  }, []);
-
   return createPortal((
-    <div className={styles.overlay}>
-      <div ref={modalRef} className={styles.modal} tabIndex={0}>
+    <FocusLock className={styles.overlay} returnFocus>
+      <div ref={modalRef} className={styles.modal}>
         <div className={styles.content}>{children}</div>
         <footer className={styles.footer}>
           <Button type="button" className={styles.close} onClick={onClose}>Close</Button>
         </footer>
       </div>
-    </div>
+    </FocusLock>
   ), modalsContainer);
 };
