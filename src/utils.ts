@@ -6,3 +6,7 @@ export const isOutOfScreen = (width: number, height: number, x: number, y: numbe
     isOutOfScreenOnY: height + y > innerHeight,
   };
 };
+
+export const isTopEnough = (wrapperHeight: number, parentHeight: number, height: number, yPostition: number): boolean => {
+  return ((wrapperHeight - parentHeight) / 2 + yPostition) > height;
+}

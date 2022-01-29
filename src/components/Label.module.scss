@@ -3,6 +3,7 @@
 .label {
   $label-color: pallete.$brand-color;
   $arrow-width: var(--arrow-width);
+  $left-offset: var(--left-offset);
 
   position: absolute;
   display: flex;
@@ -57,12 +58,12 @@
 
 
   &.top-right {
-    transform: translate(calc(-100% + $arrow-width * 2), $arrow-width);
+    transform: translate(calc(-100% + ($arrow-width * 2) + $left-offset), $arrow-width);
 
     &::after {
       border-bottom-color: $label-color;
       top: 0;
-      right: $arrow-width;
+      right: calc($arrow-width + $left-offset);
       transform: translateY(-100%);
     }
   }
@@ -76,10 +77,54 @@
   }
 
   &.bottom-right {
-    transform: translate(calc(-100% + $arrow-width * 2), calc(-100% - $arrow-width));
+    transform: translate(calc(-100% + ($arrow-width * 2) + $left-offset), calc(-100% - $arrow-width));
 
     &::after {
-      right: $arrow-width;
+      right: calc($arrow-width + $left-offset);
+    }
+  }
+
+  &.left-top {
+    transform: translate($arrow-width, calc($arrow-width * -2));
+
+    &::after {
+      border-right-color: $label-color;
+      top: $arrow-width;
+      left: 0;
+      transform: translateX(-100%);
+    }
+  }
+
+  &.right-top {
+    transform: translate(calc(-100% - $arrow-width), calc($arrow-width * -2));
+
+    &::after {
+      border-left-color: $label-color;
+      top: $arrow-width;
+      right: 0;
+      transform: translateX(100%);
+    }
+  }
+
+  &.left-bottom {
+    transform: translate($arrow-width, calc(-100% - $arrow-width * -2));
+
+    &::after {
+      border-right-color: $label-color;
+      bottom: $arrow-width;
+      left: 0;
+      transform: translateX(-100%);
+    }
+  }
+
+  &.right-bottom {
+    transform: translate(calc(-100% - $arrow-width), calc(-100% - $arrow-width * -2));
+
+    &::after {
+      border-left-color: $label-color;
+      bottom: $arrow-width;
+      right: 0;
+      transform: translateX(100%);
     }
   }
 }

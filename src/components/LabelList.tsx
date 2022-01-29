@@ -1,5 +1,5 @@
 import { FC, useState, MouseEvent, useEffect } from 'react';
-import { isOutOfScreen } from '../utils';
+import { isOutOfScreen, isTopEnough } from '../utils';
 import { Label, LabelObject, LabelPlacement, LABEL_ARROW_SIZE } from './Label';
 import { LABEL_FORM_HEIGHT, LABEL_FORM_WIDTH } from './LabelForm';
 import styles from './LabelList.module.scss';
@@ -18,21 +18,34 @@ export const LabelList: FC<LabelListProps> = ({ list, onChange }) => {
 
   const addNewLabel = (event: MouseEvent<HTMLUListElement>) => {
     if (event.currentTarget === event.target) {
-      let placement = LabelPlacement.TOP_LEFT;
-      const { offsetWidth, offsetHeight } = event.currentTarget;
+      const { offsetWidth, offsetHeight, offsetParent } = event.currentTarget;
       const { offsetX, offsetY, clientX, clientY } = event.nativeEvent;
+      const labelWithFormHeight = LABEL_FORM_HEIGHT + LABEL_ARROW_SIZE;
+
+      const isLeftEdge = clientX < LABEL_ARROW_SIZE * 2;
+      const isRightEdge = clientX > window.innerWidth - LABEL_ARROW_SIZE * 2;
+
+      let placement = isLeftEdge ? LabelPlacement.LEFT_TOP : LabelPlacement.TOP_LEFT;
+
+      const wrapperHeight = offsetParent?.parentElement?.clientHeight ?? offsetHeight;
+
+      const isTopEnoughForLabel = isTopEnough(wrapperHeight, offsetHeight, labelWithFormHeight, offsetY);
 
       const x = offsetX / offsetWidth * 100;
       const y = offsetY / offsetHeight * 100;
 
-      const { isOutOfScreenOnX, isOutOfScreenOnY } = isOutOfScreen(LABEL_FORM_WIDTH, LABEL_FORM_HEIGHT + LABEL_ARROW_SIZE, clientX, clientY);
+      const { isOutOfScreenOnX, isOutOfScreenOnY } = isOutOfScreen(LABEL_FORM_WIDTH, labelWithFormHeight, clientX, clientY);
 
       if (isOutOfScreenOnX && isOutOfScreenOnY) {
-        placement = LabelPlacement.BOTTOM_RIGHT;
+        if (isTopEnoughForLabel) {
+          placement = isRightEdge ? LabelPlacement.RIGHT_BOTTOM : LabelPlacement.BOTTOM_RIGHT;
+        } else {
+          placement = isRightEdge ? LabelPlacement.RIGHT_TOP : LabelPlacement.TOP_RIGHT;
+        }
       } else if (isOutOfScreenOnX) {
-        placement = LabelPlacement.TOP_RIGHT;
-      } else if (isOutOfScreenOnY) {
-        placement = LabelPlacement.BOTTOM_LEFT;
+        placement = isRightEdge ? LabelPlacement.RIGHT_TOP : LabelPlacement.TOP_RIGHT;
+      } else if (isOutOfScreenOnY && isTopEnoughForLabel) {
+        placement = isLeftEdge ? LabelPlacement.LEFT_BOTTOM : LabelPlacement.BOTTOM_LEFT;
       }
 
       const newLabel: LabelObject = {
@@ -77,3 +90,4 @@ export const LabelList: FC<LabelListProps> = ({ list, onChange }) => {
     </ul>
   );
 };
+
