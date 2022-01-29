@@ -1,14 +1,9 @@
-.container {
-  padding: 5px 10px;
-}
-
 .text {
   overflow: hidden;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 6;
+  padding: 5px 10px;
   margin: 0;
-  word-wrap: break-word;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .show-full-button {

@@ -13,10 +13,9 @@ export const LabelText: FC = ({ children }) => {
 
   useLayoutEffect(() => {
     if (textRef.current) {
-      const textHeight = textRef.current.offsetHeight;
-      const textScrollHeight = textRef.current.scrollHeight;
+      const { offsetWidth, scrollWidth } = textRef.current;
 
-      if (textScrollHeight > textHeight) {
+      if (scrollWidth > offsetWidth) {
         setShowFullButtonVisible(true);
       }
     }
@@ -24,9 +23,7 @@ export const LabelText: FC = ({ children }) => {
 
   return (
     <>
-      <div className={styles.container}>
-        <p ref={textRef} className={styles.text}>{children}</p>
-      </div>
+      <p ref={textRef} className={styles.text}>{children}</p>
       {isShowFullButtonVisible && (
         <Button type="button" className={styles['show-full-button']} onClick={showFullTextModal} small>
           Show full

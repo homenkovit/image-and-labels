@@ -67,8 +67,6 @@ export const Label: FC<LabelProps> = ({ label, onUpdate, onCancel }) => {
       }
     };
 
-    changeLabelPlacementRelativeScreen();
-
     window.addEventListener('resize', changeLabelPlacementRelativeScreen);
 
     return () => window.removeEventListener('resize', changeLabelPlacementRelativeScreen);

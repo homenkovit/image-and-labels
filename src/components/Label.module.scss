@@ -12,6 +12,7 @@
   background-color: $label-color;
   box-shadow: 0 2px 16px 0 rgb(0 0 0 / 40%);
   color: #ffffff;
+  transition: opacity 300ms;
 
   &.saved {
     opacity: 0.8;
