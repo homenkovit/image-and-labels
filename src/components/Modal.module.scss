@@ -1,11 +1,20 @@
 @use '../pallete.scss' as pallete;
 
-.modal {
+.overlay {
   z-index: 100;
+  overflow: hidden;
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(0 0 0 / 60%);
+}
+
+.modal {
   overflow: hidden;
   display: flex;
   flex-direction: column;
