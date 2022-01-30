@@ -18,14 +18,10 @@ export const LabelList: FC<LabelListProps> = ({ list, onChange }) => {
 
   const addNewLabel = (event: MouseEvent<HTMLUListElement>) => {
     if (event.currentTarget === event.target) {
+      let placement = LabelPlacement.TOP_LEFT;
       const { offsetWidth, offsetHeight, offsetParent } = event.currentTarget;
       const { offsetX, offsetY, clientX, clientY } = event.nativeEvent;
       const labelWithFormHeight = LABEL_FORM_HEIGHT + LABEL_ARROW_SIZE;
-
-      const isLeftEdge = clientX < LABEL_ARROW_SIZE * 2;
-      const isRightEdge = clientX > window.innerWidth - LABEL_ARROW_SIZE * 2;
-
-      let placement = isLeftEdge ? LabelPlacement.LEFT_TOP : LabelPlacement.TOP_LEFT;
 
       const wrapperHeight = offsetParent?.parentElement?.clientHeight ?? offsetHeight;
 
@@ -38,14 +34,14 @@ export const LabelList: FC<LabelListProps> = ({ list, onChange }) => {
 
       if (isOutOfScreenOnX && isOutOfScreenOnY) {
         if (isTopEnoughForLabel) {
-          placement = isRightEdge ? LabelPlacement.RIGHT_BOTTOM : LabelPlacement.BOTTOM_RIGHT;
+          placement = LabelPlacement.BOTTOM_RIGHT;
         } else {
-          placement = isRightEdge ? LabelPlacement.RIGHT_TOP : LabelPlacement.TOP_RIGHT;
+          placement = LabelPlacement.TOP_RIGHT;
         }
       } else if (isOutOfScreenOnX) {
-        placement = isRightEdge ? LabelPlacement.RIGHT_TOP : LabelPlacement.TOP_RIGHT;
+        placement = LabelPlacement.TOP_RIGHT;
       } else if (isOutOfScreenOnY && isTopEnoughForLabel) {
-        placement = isLeftEdge ? LabelPlacement.LEFT_BOTTOM : LabelPlacement.BOTTOM_LEFT;
+        placement = LabelPlacement.BOTTOM_LEFT;
       }
 
       const newLabel: LabelObject = {

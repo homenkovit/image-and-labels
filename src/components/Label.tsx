@@ -11,10 +11,6 @@ export enum LabelPlacement {
   TOP_RIGHT = 'top-right',
   BOTTOM_LEFT = 'bottom-left',
   BOTTOM_RIGHT = 'bottom-right',
-  LEFT_TOP = 'left-top',
-  RIGHT_TOP = 'right-top',
-  LEFT_BOTTOM = 'left-bottom',
-  RIGHT_BOTTOM = 'right-bottom',
 }
 
 export type LabelObject = {
@@ -39,7 +35,7 @@ export const Label: FC<LabelProps> = ({ label, onUpdate, onCancel }) => {
   const labelStyles = {
     top: `${coordinates.y}%`,
     left: `${coordinates.x}%`,
-    '--arrow-width': `${LABEL_ARROW_SIZE}px`,
+    '--arrow-size': `${LABEL_ARROW_SIZE}px`,
     '--left-offset': '0px',
     '--right-offset': '0px',
   };
@@ -73,12 +69,6 @@ export const Label: FC<LabelProps> = ({ label, onUpdate, onCancel }) => {
           if (labelPlacement === LabelPlacement.BOTTOM_LEFT) {
             setLabelPlacement(LabelPlacement.BOTTOM_RIGHT);
           }
-          if (labelPlacement === LabelPlacement.TOP_RIGHT) {
-            setLabelPlacement(LabelPlacement.RIGHT_TOP);
-          }
-          if (labelPlacement === LabelPlacement.BOTTOM_RIGHT) {
-            setLabelPlacement(LabelPlacement.RIGHT_BOTTOM);
-          }
         } else if (isOutOfScreenOnY && isTopEnoughForLabel) {
           if (labelPlacement === LabelPlacement.TOP_LEFT) {
             setLabelPlacement(LabelPlacement.BOTTOM_LEFT);
@@ -86,20 +76,7 @@ export const Label: FC<LabelProps> = ({ label, onUpdate, onCancel }) => {
           if (labelPlacement === LabelPlacement.TOP_RIGHT) {
             setLabelPlacement(LabelPlacement.BOTTOM_RIGHT);
           }
-          if (labelPlacement === LabelPlacement.LEFT_TOP) {
-            setLabelPlacement(LabelPlacement.LEFT_BOTTOM);
-          }
-          if (labelPlacement === LabelPlacement.RIGHT_TOP) {
-            setLabelPlacement(LabelPlacement.RIGHT_BOTTOM);
-          }
-        } else if (left < 0) {
-          if (labelPlacement === LabelPlacement.TOP_LEFT) {
-            setLabelPlacement(LabelPlacement.LEFT_TOP);
-          }
-          if (labelPlacement === LabelPlacement.BOTTOM_LEFT) {
-            setLabelPlacement(LabelPlacement.LEFT_BOTTOM);
-          }
-        } else if (left) {}
+        }
       }
     };
 

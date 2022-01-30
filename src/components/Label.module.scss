@@ -2,7 +2,7 @@
 
 .label {
   $label-color: pallete.$brand-color;
-  $arrow-width: var(--arrow-width);
+  $arrow-border-width: calc(var(--arrow-size) / 2);
   $left-offset: var(--left-offset);
 
   position: absolute;
@@ -27,7 +27,7 @@
   &::after {
     content: '';
     position: absolute;
-    border: $arrow-width solid transparent;
+    border: $arrow-border-width solid transparent;
   }
 
   &.top-left,
@@ -49,82 +49,43 @@
   }
 
   &.top-left {
-    transform: translate(calc($arrow-width * -2), $arrow-width);
+    transform: translateY(calc($arrow-border-width * 2));
+    border-top-left-radius: 0;
 
     &::after {
-      left: $arrow-width;
+      left: 0;
+      border-left-color: $label-color;
     }
   }
 
 
   &.top-right {
-    transform: translate(calc(-100% + ($arrow-width * 2) + $left-offset), $arrow-width);
+    transform: translate(calc(-100% + $left-offset), calc($arrow-border-width * 2));
+    border-top-right-radius: 0;
 
     &::after {
-      border-bottom-color: $label-color;
-      top: 0;
-      right: calc($arrow-width + $left-offset);
-      transform: translateY(-100%);
+      right: $left-offset;
+      border-right-color: $label-color;
     }
   }
 
   &.bottom-left {
-    transform: translate(calc($arrow-width * -2), calc(-100% - $arrow-width));
+    transform: translateY(calc(-100% - $arrow-border-width * 2));
+    border-bottom-left-radius: 0;
 
     &::after {
-      left: $arrow-width;
+      left: 0;
+      border-left-color: $label-color;
     }
   }
 
   &.bottom-right {
-    transform: translate(calc(-100% + ($arrow-width * 2) + $left-offset), calc(-100% - $arrow-width));
+    transform: translate(calc(-100% + $left-offset), calc(-100% - $arrow-border-width * 2));
+    border-bottom-right-radius: 0;
 
     &::after {
-      right: calc($arrow-width + $left-offset);
-    }
-  }
-
-  &.left-top {
-    transform: translate($arrow-width, calc($arrow-width * -2));
-
-    &::after {
+      right: $left-offset;
       border-right-color: $label-color;
-      top: $arrow-width;
-      left: 0;
-      transform: translateX(-100%);
-    }
-  }
-
-  &.right-top {
-    transform: translate(calc(-100% - $arrow-width), calc($arrow-width * -2));
-
-    &::after {
-      border-left-color: $label-color;
-      top: $arrow-width;
-      right: 0;
-      transform: translateX(100%);
-    }
-  }
-
-  &.left-bottom {
-    transform: translate($arrow-width, calc(-100% - $arrow-width * -2));
-
-    &::after {
-      border-right-color: $label-color;
-      bottom: $arrow-width;
-      left: 0;
-      transform: translateX(-100%);
-    }
-  }
-
-  &.right-bottom {
-    transform: translate(calc(-100% - $arrow-width), calc(-100% - $arrow-width * -2));
-
-    &::after {
-      border-left-color: $label-color;
-      bottom: $arrow-width;
-      right: 0;
-      transform: translateX(100%);
     }
   }
 }
